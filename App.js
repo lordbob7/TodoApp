@@ -1,16 +1,19 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { Component } from 'react';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import Todos from './views/todos.js';
+import data from './todos.json';
 
-export default class App extends React.Component {
+export default class App extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.text}>Hello world!</Text>
-      </View>
-    );
-  }
+        <View>
+          <Todos todos={data}/>
+        </View>
+      );
+    }
 }
 
+/*
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -22,3 +25,4 @@ const styles = StyleSheet.create({
     fontSize: 36
   }
 });
+*/
