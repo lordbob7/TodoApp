@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Platform, NativeModules, ScrollView, StyleSheet, Text, View, StatusBar } from 'react-native';
-import Todos from './views/todos.js';
-import Controls from './views/controls.js';
+import Todos from './components/todos.js';
+import Controls from './components/controls.js';
+import NewTodo from './components/newtodo.js';
 import data from './todos.json';
 
 const statusBarHeight = 20;
@@ -17,14 +18,31 @@ const setStatusBarHeight = () => {
 setStatusBarHeight();
 
 export default class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      addNewVisible: false,
+      addNewInput: ''
+    };
+
+    this.onAddTodo = this.onAddTodo.bind(this);
+    this.onClearTodos = this.onClearTodos.bind(this);
+    this.onCloseAddNew = this.onCloseAddNew.bind(this);
+  }
 
   onAddTodo() {
     console.log('onAddTodo');
-    //data.push({text:text, done:false});
+    if (this.state.addNewVisible === false) {
+        this.setState({addNewVisible: true});
+    }
   }
 
   onClearTodos() {
     console.log('onClearTodos');
+  }
+
+  onCloseAddNew() {
+    this.setState({addNewVisible: false, addNewInput: ''})
   }
 
   render() {
@@ -38,6 +56,11 @@ export default class App extends Component {
           borderBottomColor: 'gray',
           marginTop: statusBarHeight
         }}>
+          <NewTodo
+            isVisible={this.state.addNewVisible}
+            onChangeText={(text) => this.setState({addNewInput: text})}
+            onRequestClose={this.onCloseAddNew}
+            text={this.state.addNewInput} />
           <View style={{flex: 5}}>
             <Todos todos={data}/>
           </View>

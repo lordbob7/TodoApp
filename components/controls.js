@@ -19,7 +19,7 @@ export default class Controls extends Component {
 
 const ControlButton = (props) => {
   return (
-    <TouchableHighlight underlayColor={'blue'} style={{flex: 1, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center' }} onPress={props.onPress}>
+    <TouchableHighlight underlayColor={'gray'} style={{flex: 1, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center' }} onPress={props.onPress}>
       <Text>{props.text}</Text>
     </TouchableHighlight>
   );
