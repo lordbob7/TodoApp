@@ -12,7 +12,7 @@ export default class Todos extends Component {
     );
 
     return(
-      <ScrollView>
+      <ScrollView style={{backgroundColor: 'white'}}>
         {todos}
       </ScrollView>
     );
@@ -20,7 +20,7 @@ export default class Todos extends Component {
 }
 
 const Todo = (props) => {
-  let bgColor = props.done ? 'rgba(111, 255, 77, 0.2)' : 'white';
+  let bgColor = props.done ? 'rgba(111, 255, 77, 0.08)' : 'white';
   //{props.done ? 'green' : 'white'}
   return (
     <View style={[styles.todo, {backgroundColor: bgColor}]}>
@@ -34,8 +34,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
-    height:80,
-    borderBottomColor: 'gray',
-    borderBottomWidth: 1
+    height:80
   }
 })

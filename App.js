@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Platform, NativeModules, ScrollView, StyleSheet, Text, View, StatusBar } from 'react-native';
+import { AppRegistry, Platform, NativeModules, ScrollView, StyleSheet, Text, View, StatusBar } from 'react-native';
 import Todos from './components/todos.js';
 import Controls from './components/controls.js';
 import NewTodo from './components/newtodo.js';
@@ -27,7 +27,8 @@ export default class App extends Component {
 
     this.onAddTodo = this.onAddTodo.bind(this);
     this.onClearTodos = this.onClearTodos.bind(this);
-    this.onCloseAddNew = this.onCloseAddNew.bind(this);
+    this.onConfirmAddTodo = this.onConfirmAddTodo.bind(this);
+    this.closeAddNew = this.closeAddNew.bind(this);
   }
 
   onAddTodo() {
@@ -41,36 +42,43 @@ export default class App extends Component {
     console.log('onClearTodos');
   }
 
-  onCloseAddNew() {
+  onConfirmAddTodo() {
+    data.push({text: this.state.addNewInput, done: false});
+    this.closeAddNew();
+  }
+
+  closeAddNew() {
     this.setState({addNewVisible: false, addNewInput: ''})
   }
 
   render() {
     return (
         <View style={{
-          flex: 1,
-          flexDirection: 'column',
-          borderTopWidth: 1,
-          borderTopColor: 'gray',
-          borderBottomWidth: 1,
-          borderBottomColor: 'gray',
-          marginTop: statusBarHeight
+              flex: 1,
+              flexDirection: 'column'
         }}>
           <NewTodo
             isVisible={this.state.addNewVisible}
             onChangeText={(text) => this.setState({addNewInput: text})}
-            onRequestClose={this.onCloseAddNew}
-            text={this.state.addNewInput} />
-          <View style={{flex: 5}}>
+            onRequestClose={this.closeAddNew}
+            text={this.state.addNewInput}
+            onConfirm={this.onConfirmAddTodo}
+            onCancel={this.closeAddNew} />
+          <View style={{flex: 9}}>
             <Todos todos={data}/>
           </View>
-          <View style={{flex: 1, borderTopColor: 'gray', borderTopWidth: 1}}>
+          <View style={{
+                        flex: 1,
+                        borderTopWidth:0.2,
+                        borderTopColor:'gray'}}>
             <Controls onAddTodo={this.onAddTodo} onClearTodos={this.onClearTodos} />
           </View>
         </View>
       );
     }
 }
+
+AppRegistry.registerComponent('Todos', () => App);
 
 /*
 const styles = StyleSheet.create({
