@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { AppRegistry, Platform, NativeModules, ScrollView, StyleSheet, Text, View, StatusBar } from 'react-native';
+import _ from 'lodash';
 import Todos from './components/todos.js';
 import Controls from './components/controls.js';
 import NewTodo from './components/newtodo.js';
@@ -22,29 +23,49 @@ export default class App extends Component {
     super(props);
     this.state = {
       addNewVisible: false,
-      addNewInput: ''
+      addNewInput: '',
+      todos: []
     };
 
     this.onAddTodo = this.onAddTodo.bind(this);
     this.onClearTodos = this.onClearTodos.bind(this);
     this.onConfirmAddTodo = this.onConfirmAddTodo.bind(this);
     this.closeAddNew = this.closeAddNew.bind(this);
+    this.onPressTodo = this.onPressTodo.bind(this);
   }
 
   onAddTodo() {
-    console.log('onAddTodo');
     if (this.state.addNewVisible === false) {
         this.setState({addNewVisible: true});
     }
   }
 
   onClearTodos() {
-    console.log('onClearTodos');
+    this.setState({todos: []});
   }
 
   onConfirmAddTodo() {
-    data.push({text: this.state.addNewInput, done: false});
+    let newTodo = {text: this.state.addNewInput, done: false};
+    if (this.state.todos.length > 0) {
+        this.setState({todos: [...this.state.todos, newTodo]});
+    } else {
+      this.setState({todos: [newTodo]})
+    }
+
     this.closeAddNew();
+  }
+
+  onPressTodo(todo) {
+    console.log('onPressTodo');
+    let temp = [...this.state.todos];
+    for (var i in temp) {
+      if (temp[i].text === todo.text) {
+        temp[i].done = !temp[i].done;
+        break;
+      }
+    }
+
+    this.setState({todos: [...temp]});
   }
 
   closeAddNew() {
@@ -52,6 +73,7 @@ export default class App extends Component {
   }
 
   render() {
+    console.log(`render() this.state.todos = ${this.state.todos}`);
     return (
         <View style={{
               flex: 1,
@@ -65,7 +87,7 @@ export default class App extends Component {
             onConfirm={this.onConfirmAddTodo}
             onCancel={this.closeAddNew} />
           <View style={{flex: 9}}>
-            <Todos todos={data}/>
+            <Todos onPress={this.onPressTodo} todos={this.state.todos}/>
           </View>
           <View style={{
                         flex: 1,

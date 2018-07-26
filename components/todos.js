@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View, TouchableWithoutFeedback } from 'react-native';
 
 export default class Todos extends Component {
   constructor(props) {
@@ -8,7 +8,7 @@ export default class Todos extends Component {
 
   render() {
     let todos = this.props.todos.map(item =>
-        <Todo key={item.text} text={item.text} done={item.done} />
+        <Todo onPress={this.props.onPress(item)} key={item.text} text={item.text} done={item.done} />
     );
 
     return(
@@ -23,9 +23,11 @@ const Todo = (props) => {
   let bgColor = props.done ? 'rgba(111, 255, 77, 0.08)' : 'white';
   //{props.done ? 'green' : 'white'}
   return (
-    <View style={[styles.todo, {backgroundColor: bgColor}]}>
-      <Text style={{fontSize:28, textAlign:'center'}}>{props.text.toUpperCase()}</Text>
-    </View>
+    <TouchableWithoutFeedback onPress={props.onPress} style={[styles.todo, {backgroundColor: bgColor}]}>
+      <View>
+        <Text style={{fontSize:28, textAlign:'center'}}>{props.text.toUpperCase()}</Text>
+      </View>
+    </TouchableWithoutFeedback>
   )
 }
 

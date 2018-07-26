@@ -1,14 +1,1 @@
-[
-    {
-      "text":"clean",
-      "done":true
-    },
-    {
-      "text":"cook",
-      "done":false
-    },
-    {
-      "text":"meditate",
-      "done": true
-    }
-]
+[]
