@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, StyleSheet, Text, View, TouchableWithoutFeedback } from 'react-native';
+import { TouchableHighlight, ScrollView, StyleSheet, Text, View, TouchableWithoutFeedback } from 'react-native';
 
 export default class Todos extends Component {
   constructor(props) {
@@ -8,7 +8,7 @@ export default class Todos extends Component {
 
   render() {
     let todos = this.props.todos.map(item =>
-        <Todo onPress={this.props.onPress(item)} key={item.text} text={item.text} done={item.done} />
+        <Todo onPress={() => {this.props.onPress(item)}} todo={item} key={item.text} text={item.text} done={item.done} />
     );
 
     return(
@@ -20,14 +20,14 @@ export default class Todos extends Component {
 }
 
 const Todo = (props) => {
-  let bgColor = props.done ? 'rgba(111, 255, 77, 0.08)' : 'white';
-  //{props.done ? 'green' : 'white'}
+  let doneColor = 'rgba(111, 255, 77, 0.25)';
+  let bgColor = props.done ?  doneColor : 'white';  
   return (
-    <TouchableWithoutFeedback onPress={props.onPress} style={[styles.todo, {backgroundColor: bgColor}]}>
-      <View>
+    <TouchableHighlight underlayColor={doneColor} onPress={props.onPress} style={{backgroundColor: bgColor}}>
+      <View style={styles.todo}>
         <Text style={{fontSize:28, textAlign:'center'}}>{props.text.toUpperCase()}</Text>
       </View>
-    </TouchableWithoutFeedback>
+    </TouchableHighlight>
   )
 }
 

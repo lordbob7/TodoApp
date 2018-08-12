@@ -35,6 +35,7 @@ export default class App extends Component {
   }
 
   onAddTodo() {
+    console.log('onAddTodo');
     if (this.state.addNewVisible === false) {
         this.setState({addNewVisible: true});
     }
@@ -46,26 +47,19 @@ export default class App extends Component {
 
   onConfirmAddTodo() {
     let newTodo = {text: this.state.addNewInput, done: false};
-    if (this.state.todos.length > 0) {
-        this.setState({todos: [...this.state.todos, newTodo]});
-    } else {
-      this.setState({todos: [newTodo]})
-    }
+    //if (this.state.todos.length > 0) {
+        this.setState({todos: [...this.state.todos, newTodo], addNewVisible: false, addNewInput: ''});
+    //} else {
+      //this.setState({todos: [newTodo]})
+    //}
 
-    this.closeAddNew();
+    //this.closeAddNew();
   }
 
-  onPressTodo(todo) {
-    console.log('onPressTodo');
-    let temp = [...this.state.todos];
-    for (var i in temp) {
-      if (temp[i].text === todo.text) {
-        temp[i].done = !temp[i].done;
-        break;
-      }
-    }
-
-    this.setState({todos: [...temp]});
+  onPressTodo(todo) {    
+    this.setState({todos: this.state.todos.map(t => {
+      return t.text === todo.text ? {...t, ...{done: !t.done}} : t;
+    })});
   }
 
   closeAddNew() {
