@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { TouchableHighlight, ScrollView, StyleSheet, Text, View, TouchableWithoutFeedback } from 'react-native';
+import * as colors from './../styles/colors.js';
 
 export default class Todos extends Component {
   constructor(props) {
@@ -12,7 +13,7 @@ export default class Todos extends Component {
     );
 
     return(
-      <ScrollView style={{backgroundColor: 'white'}}>
+      <ScrollView style={{}}>
         {todos}
       </ScrollView>
     );
@@ -20,12 +21,12 @@ export default class Todos extends Component {
 }
 
 const Todo = (props) => {
-  let doneColor = 'rgba(111, 255, 77, 0.25)';
-  let bgColor = props.done ?  doneColor : 'white';  
+  let textColor = props.done ? colors.doneColor : 'gray';
+  //let bgColor = props.done ?  doneColor : 'white';
   return (
-    <TouchableHighlight underlayColor={doneColor} onPress={props.onPress} style={{backgroundColor: bgColor}}>
+    <TouchableHighlight underlayColor={'lightgray'} onPress={props.onPress}>
       <View style={styles.todo}>
-        <Text style={{fontSize:28, textAlign:'center'}}>{props.text.toUpperCase()}</Text>
+        <Text style={{fontSize:28, textAlign:'center', color: textColor}}>{props.text.toUpperCase()}</Text>
       </View>
     </TouchableHighlight>
   )
@@ -33,9 +34,11 @@ const Todo = (props) => {
 
 const styles = StyleSheet.create({
   todo: {
+    backgroundColor: 'white',
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
-    height:80
+    height:80,
+    padding:3
   }
 })

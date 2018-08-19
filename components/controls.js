@@ -13,8 +13,8 @@ export default class Controls extends Component {
                   flexDirection: 'row',
                   justifyContent: 'center'
                 }}>
-        <ControlButton text='Add' onPress={this.props.onAddTodo} />
         <ControlButton text='Clear' onPress={this.props.onClearTodos} />
+        <ControlButton text='Add' onPress={this.props.onAddTodo} />
       </View>
     );
   }

@@ -27,7 +27,7 @@ export default class NewTodo extends Component {
                 height:150,
                 backgroundColor: 'rgba(252, 250, 248, 1.0)'
                }}>
-               <View style={{flex:1, padding: 3, alignItems: 'center'}}>
+               <View style={{flex:4, padding: 3, alignItems: 'center', justifyContent: 'center'}}>
                   <TextInput
                     ref='todoInput'
                     underlineColorAndroid='transparent'
@@ -38,15 +38,15 @@ export default class NewTodo extends Component {
                     selectTextOnFocus={true}
                     style={{backgroundColor: 'transparent', fontSize: 24, textAlign: 'center'}} />
                 </View>
-                <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center' }}>
+                <View style={{flex: 3, flexDirection: 'row', justifyContent: 'center' }}>
+                <TouchableNativeFeedback background={TouchableNativeFeedback.SelectableBackground()} onPress={this.props.onCancel}>
+                  <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                    <Text>Cancel</Text>
+                  </View>
+                </TouchableNativeFeedback>
                   <TouchableNativeFeedback background={TouchableNativeFeedback.SelectableBackground()} onPress={this.props.onConfirm}>
                     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
                       <Text>Ok</Text>
-                    </View>
-                  </TouchableNativeFeedback>
-                  <TouchableNativeFeedback background={TouchableNativeFeedback.SelectableBackground()} onPress={this.props.onCancel}>
-                    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                      <Text>Cancel</Text>
                     </View>
                   </TouchableNativeFeedback>
                 </View>

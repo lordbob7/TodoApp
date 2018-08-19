@@ -5,6 +5,7 @@ import Todos from './components/todos.js';
 import Controls from './components/controls.js';
 import NewTodo from './components/newtodo.js';
 import data from './todos.json';
+import * as colors from './styles/colors.js';
 
 const statusBarHeight = 20;
 
@@ -46,7 +47,7 @@ export default class App extends Component {
   }
 
   onConfirmAddTodo() {
-    let newTodo = {text: this.state.addNewInput, done: false};
+    let newTodo = {text: this.state.addNewInput, done: false, selected: false};
     //if (this.state.todos.length > 0) {
         this.setState({todos: [...this.state.todos, newTodo], addNewVisible: false, addNewInput: ''});
     //} else {
@@ -56,7 +57,8 @@ export default class App extends Component {
     //this.closeAddNew();
   }
 
-  onPressTodo(todo) {    
+  /// Toggles the 'done' state of a todo
+  onPressTodo(todo) {
     this.setState({todos: this.state.todos.map(t => {
       return t.text === todo.text ? {...t, ...{done: !t.done}} : t;
     })});
@@ -80,7 +82,7 @@ export default class App extends Component {
             text={this.state.addNewInput}
             onConfirm={this.onConfirmAddTodo}
             onCancel={this.closeAddNew} />
-          <View style={{flex: 9}}>
+          <View style={{flex: 9, backgroundColor: colors.bgColor}}>
             <Todos onPress={this.onPressTodo} todos={this.state.todos}/>
           </View>
           <View style={{
