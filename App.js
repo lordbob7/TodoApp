@@ -47,14 +47,12 @@ export default class App extends Component {
   }
 
   onConfirmAddTodo() {
-    let newTodo = {text: this.state.addNewInput, done: false, selected: false};
-    //if (this.state.todos.length > 0) {
-        this.setState({todos: [...this.state.todos, newTodo], addNewVisible: false, addNewInput: ''});
-    //} else {
-      //this.setState({todos: [newTodo]})
-    //}
+    if (this.state.addNewInput === '') {
+      return;
+    }
 
-    //this.closeAddNew();
+    let newTodo = {text: this.state.addNewInput, done: false, selected: false};
+    this.setState({todos: [...this.state.todos, newTodo], addNewVisible: false, addNewInput: ''});
   }
 
   /// Toggles the 'done' state of a todo
