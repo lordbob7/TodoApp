@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AppRegistry, Platform, NativeModules, ScrollView, StyleSheet, Text, View, StatusBar } from 'react-native';
+import { AppRegistry, Platform, NativeModules, ScrollView, StyleSheet, Text, View, StatusBar, AsyncStorage } from 'react-native';
 import _ from 'lodash';
 import Todos from './components/todos.js';
 import Controls from './components/controls.js';
@@ -8,6 +8,7 @@ import data from './todos.json';
 import * as colors from './styles/colors.js';
 
 const statusBarHeight = 20;
+const todosStorageKey = 'TODOS'
 
 const setStatusBarHeight = () => {
   if (Platform.OS === 'android') {
@@ -33,6 +34,27 @@ export default class App extends Component {
     this.onConfirmAddTodo = this.onConfirmAddTodo.bind(this);
     this.closeAddNew = this.closeAddNew.bind(this);
     this.onPressTodo = this.onPressTodo.bind(this);
+  }
+
+  async componentDidMount() {
+    let todos = []
+    let storedItems = await AsyncStorage.getItem(todosStorageKey);
+    if (storedItems !== null && storedItems !== '') {
+      console.log(`stored items: ${storedItems}`);
+      todos = JSON.parse(storedItems);
+    }
+
+    this.setState({todos: todos});
+  }
+
+  async componentWillUnmount() {
+      console.log('clearing items');
+      await AsyncStorage.removeItem(todosStorageKey);
+      if (this.state.todos.length > 0) {
+        let json = JSON.stringify(this.state.todos);
+        console.log(`storing items: ${json}`)
+        await AsyncStorage.setItem(todosStorageKey, json);
+      }
   }
 
   onAddTodo() {
@@ -67,7 +89,6 @@ export default class App extends Component {
   }
 
   render() {
-    console.log(`render() this.state.todos = ${this.state.todos}`);
     return (
         <View style={{
               flex: 1,
