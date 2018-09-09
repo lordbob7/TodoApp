@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AppRegistry, Platform, NativeModules, ScrollView, StyleSheet, Text, View, StatusBar, AsyncStorage } from 'react-native';
+import { AppRegistry, AppState, Platform, NativeModules, ScrollView, StyleSheet, Text, View, StatusBar, AsyncStorage } from 'react-native';
 import _ from 'lodash';
 import Todos from './components/todos.js';
 import Controls from './components/controls.js';
@@ -34,9 +34,35 @@ export default class App extends Component {
     this.onConfirmAddTodo = this.onConfirmAddTodo.bind(this);
     this.closeAddNew = this.closeAddNew.bind(this);
     this.onPressTodo = this.onPressTodo.bind(this);
+    this.storeTodos = this.storeTodos.bind(this);
+    this.loadStoredTodos = this.loadStoredTodos.bind(this);
+    this.handleAppStateChange = this.handleAppStateChange.bind(this);
   }
 
   async componentDidMount() {
+    console.log('componentDidMount');
+    this.addEventListeners();
+    this.loadStoredTodos();
+  }
+
+  async componentWillUnmount() {
+      console.log('componentWillUnmount');
+      AppState.removeEventListener('change', this.handleAppStateChange);
+  }
+
+  addEventListeners() {
+    AppState.addEventListener('change', this.handleAppStateChange);
+  }
+
+  async handleAppStateChange(newAppState) {
+    console.log(`handleAppStateChange new state: ${newAppState}`);
+
+    if (newAppState === 'background' || newAppState === 'inactive') {
+      await this.storeTodos();
+    }
+  }
+
+  async loadStoredTodos() {
     let todos = []
     let storedItems = await AsyncStorage.getItem(todosStorageKey);
     if (storedItems !== null && storedItems !== '') {
@@ -47,8 +73,7 @@ export default class App extends Component {
     this.setState({todos: todos});
   }
 
-  async componentWillUnmount() {
-      console.log('clearing items');
+  async storeTodos() {
       await AsyncStorage.removeItem(todosStorageKey);
       if (this.state.todos.length > 0) {
         let json = JSON.stringify(this.state.todos);
@@ -116,17 +141,3 @@ export default class App extends Component {
 }
 
 AppRegistry.registerComponent('Todos', () => App);
-
-/*
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  text: {
-    fontSize: 36
-  }
-});
-*/
