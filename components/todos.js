@@ -9,7 +9,7 @@ export default class Todos extends Component {
 
   render() {
     let todos = this.props.todos.map(item =>
-        <Todo onPress={() => {this.props.onPress(item)}} todo={item} key={item.text} text={item.text} done={item.done} />
+        <Todo onPress={() => {this.props.onPress(item)}} onLongPress={() => {this.props.onLongPress(item)}} todo={item} key={item.text} text={item.text} done={item.done} selected={item.selected} />
     );
 
     return(
@@ -21,11 +21,11 @@ export default class Todos extends Component {
 }
 
 const Todo = (props) => {
-  let textColor = props.done ? colors.doneColor : 'gray';
-  //let bgColor = props.done ?  doneColor : 'white';
+  let textColor = props.done ? colors.doneColor : 'gray';  
+  let bgColor = props.selected ?  colors.selectedColor : 'white';
   return (
-    <TouchableHighlight underlayColor={'lightgray'} onPress={props.onPress}>
-      <View style={styles.todo}>
+    <TouchableHighlight underlayColor={'lightgray'} onPress={props.onPress} onLongPress={props.onLongPress}>
+      <View style={[styles.todo, {backgroundColor: bgColor}]}>
         <Text style={{fontSize:28, textAlign:'center', color: textColor}}>{props.text.toUpperCase()}</Text>
       </View>
     </TouchableHighlight>
@@ -34,7 +34,6 @@ const Todo = (props) => {
 
 const styles = StyleSheet.create({
   todo: {
-    backgroundColor: 'white',
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',

@@ -26,7 +26,8 @@ export default class App extends Component {
     this.state = {
       addNewVisible: false,
       addNewInput: '',
-      todos: []
+      todos: [],
+      selectionActive: false
     };
 
     this.onAddTodo = this.onAddTodo.bind(this);
@@ -34,6 +35,7 @@ export default class App extends Component {
     this.onConfirmAddTodo = this.onConfirmAddTodo.bind(this);
     this.closeAddNew = this.closeAddNew.bind(this);
     this.onPressTodo = this.onPressTodo.bind(this);
+    this.onLongPressTodo = this.onLongPressTodo.bind(this);
     this.storeTodos = this.storeTodos.bind(this);
     this.loadStoredTodos = this.loadStoredTodos.bind(this);
     this.handleAppStateChange = this.handleAppStateChange.bind(this);
@@ -90,7 +92,7 @@ export default class App extends Component {
   }
 
   onClearTodos() {
-    this.setState({todos: []});
+    this.setState({todos: [], selectionActive: false});
   }
 
   onConfirmAddTodo() {
@@ -104,9 +106,26 @@ export default class App extends Component {
 
   /// Toggles the 'done' state of a todo
   onPressTodo(todo) {
-    this.setState({todos: this.state.todos.map(t => {
-      return t.text === todo.text ? {...t, ...{done: !t.done}} : t;
-    })});
+    console.log(`onPressTodo`);
+    let todos = this.state.todos.map(t => {
+      if (t.text === todo.text) {
+        let mutatedTodo = this.state.selectionActive ? {...t, ...{selected: !t.selected}} : {...t, ...{done: !t.done}}
+        return mutatedTodo;
+      } else {
+        return t;
+      }
+    });
+
+    this.setState({todos: todos, selectionActive: _.some(todos, 'selected')});
+  }
+
+  onLongPressTodo(todo) {
+    console.log(`onLongPressTodo`);
+    let todos = this.state.todos.map(t => {
+      return t.text === todo.text ? {...t, ...{selected: !t.selected}} : t;
+    });
+
+    this.setState({todos: todos, selectionActive: _.some(todos, 'selected')});
   }
 
   closeAddNew() {
@@ -124,10 +143,10 @@ export default class App extends Component {
             onChangeText={(text) => this.setState({addNewInput: text})}
             onRequestClose={this.closeAddNew}
             text={this.state.addNewInput}
-            onConfirm={this.onConfirmAddTodo}
+            onConfirm={this.onConfirmAddTodo} 
             onCancel={this.closeAddNew} />
           <View style={{flex: 9, backgroundColor: colors.bgColor}}>
-            <Todos onPress={this.onPressTodo} todos={this.state.todos}/>
+            <Todos onPress={this.onPressTodo} onLongPress={this.onLongPressTodo} todos={this.state.todos}/>
           </View>
           <View style={{
                         flex: 1,
