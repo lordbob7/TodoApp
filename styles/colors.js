@@ -1,3 +1,5 @@
 export const bgColor = 'white'
 export const doneColor = 'rgba(100, 255, 80, 1.0)'
-export const selectedColor = 'lightgray'
+export const todoTextColor = 'gray'
+export const selectedColor = 'rgba(139, 166, 255, 0.1)'
+export const todoUnderlayColor = 'rgba(139, 166, 255, 0.1)'

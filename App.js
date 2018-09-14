@@ -146,7 +146,7 @@ export default class App extends Component {
             onConfirm={this.onConfirmAddTodo} 
             onCancel={this.closeAddNew} />
           <View style={{flex: 9, backgroundColor: colors.bgColor}}>
-            <Todos onPress={this.onPressTodo} onLongPress={this.onLongPressTodo} todos={this.state.todos}/>
+            <Todos onPress={this.onPressTodo} onLongPress={this.onLongPressTodo} todos={this.state.todos} />
           </View>
           <View style={{
                         flex: 1,

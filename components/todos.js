@@ -21,12 +21,14 @@ export default class Todos extends Component {
 }
 
 const Todo = (props) => {
-  let textColor = props.done ? colors.doneColor : 'gray';  
   let bgColor = props.selected ?  colors.selectedColor : 'white';
   return (
-    <TouchableHighlight underlayColor={'lightgray'} onPress={props.onPress} onLongPress={props.onLongPress}>
+    <TouchableHighlight underlayColor={colors.todoUnderlayColor} onPress={props.onPress} onLongPress={props.onLongPress}>
       <View style={[styles.todo, {backgroundColor: bgColor}]}>
-        <Text style={{fontSize:28, textAlign:'center', color: textColor}}>{props.text.toUpperCase()}</Text>
+        <Text style={{fontSize:28, textAlign:'left', color: colors.todoTextColor, marginLeft: 10}}>{props.text.toUpperCase()}</Text>
+        {props.done &&
+          <Text style={{fontSize:28, textAlign:'right', marginRight: 10}}>&#9632;</Text>
+        }
       </View>
     </TouchableHighlight>
   )
@@ -35,9 +37,12 @@ const Todo = (props) => {
 const styles = StyleSheet.create({
   todo: {
     flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    height:80,
-    padding:3
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    height: 80,
+    padding: 3,
+    borderBottomColor: 'gray',
+    borderBottomWidth:0.2
   }
 })
