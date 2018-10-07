@@ -39,6 +39,7 @@ export default class App extends Component {
     this.storeTodos = this.storeTodos.bind(this);
     this.loadStoredTodos = this.loadStoredTodos.bind(this);
     this.handleAppStateChange = this.handleAppStateChange.bind(this);
+    this.onDeselectTodos = this.onDeselectTodos.bind(this);
   }
 
   async componentDidMount() {
@@ -92,7 +93,12 @@ export default class App extends Component {
   }
 
   onClearTodos() {
-    this.setState({todos: [], selectionActive: false});
+    if (this.state.selectionActive) {
+      let todos = _.filter(this.state.todos, {'selected': false});
+      this.setState({todos: todos, selectionActive: false});
+    } else {
+      this.setState({todos: [], selectionActive: false});
+    }
   }
 
   onConfirmAddTodo() {
@@ -121,15 +127,26 @@ export default class App extends Component {
 
   onLongPressTodo(todo) {
     console.log(`onLongPressTodo`);
-    let todos = this.state.todos.map(t => {
-      return t.text === todo.text ? {...t, ...{selected: !t.selected}} : t;
-    });
+    
+    if (!todo.selected) {
+      let todos = this.state.todos.map(t => {
+        return t.text === todo.text ? {...t, ...{selected: true}} : t;
+      });
 
-    this.setState({todos: todos, selectionActive: _.some(todos, 'selected')});
+      this.setState({todos: todos, selectionActive: _.some(todos, 'selected')});
+    }
   }
 
   closeAddNew() {
     this.setState({addNewVisible: false, addNewInput: ''})
+  }
+
+  onDeselectTodos() {
+    let todos = this.state.todos.map(t => {
+      return {...t, ...{selected: false}}
+    });
+
+    this.setState({todos: todos, selectionActive: false});
   }
 
   render() {
@@ -152,7 +169,7 @@ export default class App extends Component {
                         flex: 1,
                         borderTopWidth:0.2,
                         borderTopColor:'gray'}}>
-            <Controls onAddTodo={this.onAddTodo} onClearTodos={this.onClearTodos} />
+            <Controls selectionActive={this.state.selectionActive} onAddTodo={this.onAddTodo} onClearTodos={this.onClearTodos} onDeselectTodos={this.onDeselectTodos} />
           </View>
         </View>
       );

@@ -7,15 +7,24 @@ export default class Controls extends Component {
   }
 
   render() {
+    let viewStyle = {
+      flex: 1,
+      flexDirection: 'row',
+      justifyContent: 'center'
+    }
+
     return (
-      <View style={{
-                  flex: 1,
-                  flexDirection: 'row',
-                  justifyContent: 'center'
-                }}>
-        <ControlButton text='Clear' onPress={this.props.onClearTodos} />
-        <ControlButton text='Add' onPress={this.props.onAddTodo} />
-      </View>
+      this.props.selectionActive ? (
+        <View style={viewStyle}>
+          <ControlButton text='Clear' onPress={this.props.onClearTodos} />
+          <ControlButton text='Deselect' onPress={this.props.onDeselectTodos} />
+        </View>
+        ) : (
+        <View style={viewStyle}>
+          <ControlButton text='Clear' onPress={this.props.onClearTodos} />
+          <ControlButton text='Add' onPress={this.props.onAddTodo} />
+        </View>
+      )
     );
   }
 }

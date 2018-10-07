@@ -17,14 +17,13 @@ export default class NewTodo extends Component {
           <View style={{
             flex: 1,
             flexDirection: 'row',
-            alignItems: 'center'
+            alignItems: 'flex-start'
           }}>
-            <View style={{flex: 1}}/>
             <View elevation={2} style={{
                 flex: 7,
                 flexDirection: 'column',
                 justifyContent: 'center',
-                height:150,
+                height:250,
                 backgroundColor: 'rgba(252, 250, 248, 1.0)'
                }}>
                <View style={{flex:4, padding: 3, alignItems: 'center', justifyContent: 'center'}}>
@@ -36,7 +35,7 @@ export default class NewTodo extends Component {
                     value={this.props.text}
                     clearButtonMode='while-editing'
                     selectTextOnFocus={true}
-                    style={{backgroundColor: 'transparent', fontSize: 24, textAlign: 'center'}} />
+                    style={{backgroundColor: 'transparent', fontSize: 36, textAlign: 'center'}} />
                 </View>
                 <View style={{flex: 3, flexDirection: 'row', justifyContent: 'center' }}>
                 <TouchableNativeFeedback background={TouchableNativeFeedback.SelectableBackground()} onPress={this.props.onCancel}>
@@ -51,7 +50,6 @@ export default class NewTodo extends Component {
                   </TouchableNativeFeedback>
                 </View>
               </View>
-            <View style={{flex: 1}}/>
           </View>
         </Modal>
     );
