@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import {TouchableNativeFeedback, TouchableHighlight, View, Modal, Text, TextInput } from 'react-native';
+import AntDesignIcon from 'react-native-vector-icons/AntDesign';
+import FeatherIcon from 'react-native-vector-icons/Feather';
+
+const iconSize = 28;
 
 export default class NewTodo extends Component {
   constructor(props) {
@@ -40,12 +44,12 @@ export default class NewTodo extends Component {
                 <View style={{flex: 3, flexDirection: 'row', justifyContent: 'center' }}>
                 <TouchableNativeFeedback background={TouchableNativeFeedback.SelectableBackground()} onPress={this.props.onCancel}>
                   <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                    <Text>Cancel</Text>
+                    <AntDesignIcon name='close' size={iconSize} />
                   </View>
                 </TouchableNativeFeedback>
                   <TouchableNativeFeedback background={TouchableNativeFeedback.SelectableBackground()} onPress={this.props.onConfirm}>
                     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                      <Text>Ok</Text>
+                      <FeatherIcon name='check' size={iconSize} />
                     </View>
                   </TouchableNativeFeedback>
                 </View>

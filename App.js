@@ -7,7 +7,7 @@ import NewTodo from './components/newtodo.js';
 import data from './todos.json';
 import * as colors from './styles/colors.js';
 
-const statusBarHeight = 20;
+var statusBarHeight = 20;
 const todosStorageKey = 'TODOS'
 
 const setStatusBarHeight = () => {
@@ -160,9 +160,9 @@ export default class App extends Component {
             onChangeText={(text) => this.setState({addNewInput: text})}
             onRequestClose={this.closeAddNew}
             text={this.state.addNewInput}
-            onConfirm={this.onConfirmAddTodo} 
+            onConfirm={this.onConfirmAddTodo}
             onCancel={this.closeAddNew} />
-          <View style={{flex: 9, backgroundColor: colors.bgColor}}>
+          <View style={{flex: 8, backgroundColor: colors.bgColor}}>
             <Todos onPress={this.onPressTodo} onLongPress={this.onLongPressTodo} todos={this.state.todos} />
           </View>
           <View style={{
@@ -176,4 +176,4 @@ export default class App extends Component {
     }
 }
 
-AppRegistry.registerComponent('Todos', () => App);
+AppRegistry.registerComponent('todos', () => App);

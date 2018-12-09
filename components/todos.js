@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { TouchableHighlight, ScrollView, StyleSheet, Text, View, TouchableWithoutFeedback } from 'react-native';
 import * as colors from './../styles/colors.js';
+import FeatherIcon from 'react-native-vector-icons/Feather';
 
 export default class Todos extends Component {
   constructor(props) {
@@ -27,7 +28,9 @@ const Todo = (props) => {
       <View style={[styles.todo, {backgroundColor: bgColor}]}>
         <Text style={{fontSize:28, textAlign:'left', color: colors.todoTextColor, marginLeft: 10}}>{props.text.toUpperCase()}</Text>
         {props.done &&
-          <Text style={{fontSize:28, textAlign:'right', marginRight: 10}}>&#9632;</Text>
+          <View style={{marginRight: 10}}>
+            <FeatherIcon name='check' size={28} />
+          </View>
         }
       </View>
     </TouchableHighlight>
