@@ -23,15 +23,14 @@ export default class Todos extends Component {
 
 const Todo = (props) => {
   let bgColor = props.selected ?  colors.selectedColor : 'white';
+  let checkColor = props.done ? colors.doneColor : 'lightgray';
   return (
     <TouchableHighlight underlayColor={colors.todoUnderlayColor} onPress={props.onPress} onLongPress={props.onLongPress}>
       <View style={[styles.todo, {backgroundColor: bgColor}]}>
-        <Text style={{fontSize:28, textAlign:'left', color: colors.todoTextColor, marginLeft: 10}}>{props.text.toUpperCase()}</Text>
-        {props.done &&
-          <View style={{marginRight: 10}}>
-            <FeatherIcon name='check' size={28} />
-          </View>
-        }
+        <Text style={{fontSize:24, fontWeight:'200', textAlign:'left', marginLeft: 20, color: colors.todoTextColor}}>{props.text.toUpperCase()}</Text>
+        <View style={{marginRight: 20}}>
+            <FeatherIcon name='check' size={28} color={checkColor} />
+        </View>
       </View>
     </TouchableHighlight>
   )
@@ -43,7 +42,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    height: 80,
+    height: 70,
     padding: 3,
     borderBottomColor: 'gray',
     borderBottomWidth:0.2

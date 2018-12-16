@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {TouchableNativeFeedback, TouchableHighlight, View, Modal, Text, TextInput } from 'react-native';
 import AntDesignIcon from 'react-native-vector-icons/AntDesign';
 import FeatherIcon from 'react-native-vector-icons/Feather';
+import { rippleColor } from './../styles/colors.js';
 
 const iconSize = 28;
 
@@ -42,12 +43,12 @@ export default class NewTodo extends Component {
                     style={{backgroundColor: 'transparent', fontSize: 36, textAlign: 'center'}} />
                 </View>
                 <View style={{flex: 3, flexDirection: 'row', justifyContent: 'center' }}>
-                <TouchableNativeFeedback background={TouchableNativeFeedback.SelectableBackground()} onPress={this.props.onCancel}>
+                <TouchableNativeFeedback background={TouchableNativeFeedback.Ripple(rippleColor, false)} onPress={this.props.onCancel}>
                   <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
                     <AntDesignIcon name='close' size={iconSize} />
                   </View>
                 </TouchableNativeFeedback>
-                  <TouchableNativeFeedback background={TouchableNativeFeedback.SelectableBackground()} onPress={this.props.onConfirm}>
+                  <TouchableNativeFeedback background={TouchableNativeFeedback.Ripple(rippleColor, false)} onPress={this.props.onConfirm}>
                     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
                       <FeatherIcon name='check' size={iconSize} />
                     </View>

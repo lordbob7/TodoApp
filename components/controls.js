@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, TouchableHighlight, TouchableNativeFeedback } from 'react-native';
 import AntDesignIcon from 'react-native-vector-icons/AntDesign';
 import FeatherIcon from 'react-native-vector-icons/Feather';
+import { controlButtonIconColor, rippleColor } from './../styles/colors.js';
 
 const iconSize = 28;
 
@@ -17,9 +18,9 @@ export default class Controls extends Component {
       justifyContent: 'center'
     }
 
-    let addIcon = (<AntDesignIcon name='plus' size={iconSize} />);
-    let removeIcon = (<FeatherIcon name='trash' size={iconSize} />);
-    let backIcon = (<AntDesignIcon name='left' size={iconSize} />);
+    let addIcon = (<AntDesignIcon name='plus' size={iconSize} color={controlButtonIconColor} />);
+    let removeIcon = (<FeatherIcon name='trash' size={26} color={controlButtonIconColor} />);
+    let backIcon = (<AntDesignIcon name='left' size={iconSize} color={controlButtonIconColor}/>);
 
     return (
       this.props.selectionActive ? (
@@ -39,7 +40,7 @@ export default class Controls extends Component {
 
 const ControlButton = (props) => {
   return (
-    <TouchableNativeFeedback background={TouchableNativeFeedback.SelectableBackground()} onPress={props.onPress}>
+    <TouchableNativeFeedback background={TouchableNativeFeedback.Ripple(rippleColor, false)} onPress={props.onPress}>
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(240, 255, 243, 0.3)' }}>
         {props.icon}
       </View>

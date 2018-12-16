@@ -167,7 +167,7 @@ export default class App extends Component {
           </View>
           <View style={{
                         flex: 1,
-                        borderTopWidth:0.2,
+                        borderTopWidth:0.0,
                         borderTopColor:'gray'}}>
             <Controls selectionActive={this.state.selectionActive} onAddTodo={this.onAddTodo} onClearTodos={this.onClearTodos} onDeselectTodos={this.onDeselectTodos} />
           </View>
