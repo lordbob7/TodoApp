@@ -33,7 +33,7 @@ export default class App extends Component {
     this.onAddTodo = this.onAddTodo.bind(this);
     this.onClearTodos = this.onClearTodos.bind(this);
     this.onConfirmAddTodo = this.onConfirmAddTodo.bind(this);
-    this.closeAddNew = this.closeAddNew.bind(this);
+    this.onCloseAddNew = this.onCloseAddNew.bind(this);
     this.onPressTodo = this.onPressTodo.bind(this);
     this.onLongPressTodo = this.onLongPressTodo.bind(this);
     this.storeTodos = this.storeTodos.bind(this);
@@ -137,7 +137,7 @@ export default class App extends Component {
     }
   }
 
-  closeAddNew() {
+  onCloseAddNew() {
     this.setState({addNewVisible: false, addNewInput: ''})
   }
 
@@ -158,10 +158,10 @@ export default class App extends Component {
           <NewTodo
             isVisible={this.state.addNewVisible}
             onChangeText={(text) => this.setState({addNewInput: text})}
-            onRequestClose={this.closeAddNew}
+            onRequestClose={this.onCloseAddNew}
             text={this.state.addNewInput}
             onConfirm={this.onConfirmAddTodo}
-            onCancel={this.closeAddNew} />
+            onCancel={this.onCloseAddNew} />
           <View style={{flex: 8, backgroundColor: colors.bgColor}}>
             <Todos onPress={this.onPressTodo} onLongPress={this.onLongPressTodo} todos={this.state.todos} />
           </View>
