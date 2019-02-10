@@ -6,6 +6,7 @@ import Controls from './components/controls.js';
 import NewTodo from './components/newtodo.js';
 import data from './todos.json';
 import * as colors from './styles/colors.js';
+import AppConfig from './appconfig.js';
 
 var statusBarHeight = 20;
 const todosStorageKey = 'TODOS'
@@ -113,14 +114,21 @@ export default class App extends Component {
   /// Toggles the 'done' state of a todo
   onPressTodo(todo) {
     console.log(`onPressTodo`);
-    let todos = this.state.todos.map(t => {
-      if (t.text === todo.text) {
-        let mutatedTodo = this.state.selectionActive ? {...t, ...{selected: !t.selected}} : {...t, ...{done: !t.done}}
-        return mutatedTodo;
-      } else {
-        return t;
-      }
-    });
+
+    let todos = []
+
+    if (AppConfig.checkIsEnabled === true) {
+      todos = this.state.todos.map(t => {
+        if (t.text === todo.text) {
+          let mutatedTodo = this.state.selectionActive ? {...t, ...{selected: !t.selected}} : {...t, ...{done: !t.done}}
+          return mutatedTodo;
+        } else {
+          return t;
+        }
+      });
+    } else {
+      todos = this.state.todos;
+    }
 
     this.setState({todos: todos, selectionActive: _.some(todos, 'selected')});
   }
@@ -163,7 +171,7 @@ export default class App extends Component {
             onConfirm={this.onConfirmAddTodo}
             onCancel={this.onCloseAddNew} />
           <View style={{flex: 8, backgroundColor: colors.bgColor}}>
-            <Todos onPress={this.onPressTodo} onLongPress={this.onLongPressTodo} todos={this.state.todos} />
+            <Todos onPress={this.onPressTodo} onLongPress={this.onLongPressTodo} todos={this.state.todos} checkIsEnabled={AppConfig.checkIsEnabled} />
           </View>
           <View style={{
                         flex: 1,

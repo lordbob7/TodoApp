@@ -22,15 +22,17 @@ export default class Todos extends Component {
 }
 
 const Todo = (props) => {
-  let bgColor = props.selected ?  colors.selectedColor : 'white';
-  let checkColor = props.done ? colors.doneColor : 'lightgray';
+  let bgColor = props.selected ?  colors.selectedColor : colors.bgColor;
+  let checkColor = props.done ? colors.doneColor : colors.notDoneColor;
   return (
     <TouchableHighlight underlayColor={colors.todoUnderlayColor} onPress={props.onPress} onLongPress={props.onLongPress}>
       <View style={[styles.todo, {backgroundColor: bgColor}]}>
         <Text style={{fontSize:24, fontWeight:'200', textAlign:'left', marginLeft: 20, color: colors.todoTextColor}}>{props.text.toUpperCase()}</Text>
-        <View style={{marginRight: 20}}>
+         {props.checkIsEnabled && 
+         <View style={{marginRight: 20}}>
             <FeatherIcon name='check' size={28} color={checkColor} />
         </View>
+         }
       </View>
     </TouchableHighlight>
   )
