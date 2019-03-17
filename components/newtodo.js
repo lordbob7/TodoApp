@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import {TouchableNativeFeedback, TouchableHighlight, View, Modal, Text, TextInput } from 'react-native';
 import AntDesignIcon from 'react-native-vector-icons/AntDesign';
-import FeatherIcon from 'react-native-vector-icons/Feather';
-import { rippleColor } from './../styles/colors.js';
+import { colors } from './../styles/colors.js';
 
 const iconSize = 28;
 
@@ -28,7 +27,7 @@ export default class NewTodo extends Component {
                 flex: 7,
                 flexDirection: 'column',
                 justifyContent: 'center',
-                height:250,
+                height: 250,
                 backgroundColor: 'rgba(252, 250, 248, 1.0)'
                }}>
                <View style={{flex:4, padding: 3, alignItems: 'center', justifyContent: 'center'}}>
@@ -43,20 +42,20 @@ export default class NewTodo extends Component {
                     style={{backgroundColor: 'transparent', fontSize: 36, textAlign: 'center'}} />
                 </View>
                 <View style={{flex: 3, flexDirection: 'row', justifyContent: 'center' }}>
-                <TouchableNativeFeedback background={TouchableNativeFeedback.Ripple(rippleColor, false)} onPress={this.props.onCancel}>
-                  <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                    <AntDesignIcon name='close' size={iconSize} />
-                  </View>
-                </TouchableNativeFeedback>
-                  <TouchableNativeFeedback background={TouchableNativeFeedback.Ripple(rippleColor, false)} onPress={this.props.onConfirm}>
-                    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                      <FeatherIcon name='check' size={iconSize} />
-                    </View>
-                  </TouchableNativeFeedback>
+                  <ModalButton iconName='close' onPress={this.props.onCancel} />
+                  <ModalButton iconName='close' onPress={this.props.onConfirm} />
                 </View>
               </View>
           </View>
         </Modal>
     );
   }
+}
+
+const ModalButton = (props) => {
+  return(<TouchableNativeFeedback background={TouchableNativeFeedback.Ripple(colors.rippleColor, false)} onPress={props.onPress}>
+            <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+              <AntDesignIcon name={this.props.iconName} size={iconSize} />
+            </View>
+         </TouchableNativeFeedback>)
 }

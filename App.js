@@ -4,22 +4,17 @@ import _ from 'lodash';
 import Todos from './components/todos.js';
 import Controls from './components/controls.js';
 import NewTodo from './components/newtodo.js';
-import data from './todos.json';
 import * as colors from './styles/colors.js';
 import AppConfig from './appconfig.js';
 
-var statusBarHeight = 20;
 const todosStorageKey = 'TODOS'
-
-const setStatusBarHeight = () => {
+const getStatusBarHeight = () => {
   if (Platform.OS === 'android') {
     statusBarHeight = StatusBar.currentHeight;
   } else if (Platform.OS === 'ios') {
     statusBarHeight = NativeModules.StatusBarManager.HEIGHT;
   }
 }
-
-setStatusBarHeight();
 
 export default class App extends Component {
   constructor(props) {
@@ -34,7 +29,7 @@ export default class App extends Component {
     this.onAddTodo = this.onAddTodo.bind(this);
     this.onClearTodos = this.onClearTodos.bind(this);
     this.onConfirmAddTodo = this.onConfirmAddTodo.bind(this);
-    this.onCloseAddNew = this.onCloseAddNew.bind(this);
+    this.onCloseAddTodo = this.onCloseAddTodo.bind(this);
     this.onPressTodo = this.onPressTodo.bind(this);
     this.onLongPressTodo = this.onLongPressTodo.bind(this);
     this.storeTodos = this.storeTodos.bind(this);
@@ -111,7 +106,6 @@ export default class App extends Component {
     this.setState({todos: [...this.state.todos, newTodo], addNewVisible: false, addNewInput: ''});
   }
 
-  /// Toggles the 'done' state of a todo
   onPressTodo(todo) {
     console.log(`onPressTodo`);
 
@@ -145,7 +139,7 @@ export default class App extends Component {
     }
   }
 
-  onCloseAddNew() {
+  onCloseAddTodo() {
     this.setState({addNewVisible: false, addNewInput: ''})
   }
 
@@ -166,10 +160,10 @@ export default class App extends Component {
           <NewTodo
             isVisible={this.state.addNewVisible}
             onChangeText={(text) => this.setState({addNewInput: text})}
-            onRequestClose={this.onCloseAddNew}
+            onRequestClose={this.onCloseAddTodo}
             text={this.state.addNewInput}
             onConfirm={this.onConfirmAddTodo}
-            onCancel={this.onCloseAddNew} />
+            onCancel={this.onCloseAddTodo} />
           <View style={{flex: 8, backgroundColor: colors.bgColor}}>
             <Todos onPress={this.onPressTodo} onLongPress={this.onLongPressTodo} todos={this.state.todos} checkIsEnabled={AppConfig.checkIsEnabled} />
           </View>
@@ -184,4 +178,4 @@ export default class App extends Component {
     }
 }
 
-AppRegistry.registerComponent('todos', () => App);
+AppRegistry.registerComponent('Todos', () => App);
