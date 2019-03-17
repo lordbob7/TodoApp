@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { TouchableHighlight, ScrollView, StyleSheet, Text, View, TouchableWithoutFeedback } from 'react-native';
-import * as colors from '../styles/colors.js';
+import { colors } from '../styles/colors.js';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 
 export default class TodoList extends Component {

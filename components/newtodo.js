@@ -43,7 +43,7 @@ export default class NewTodo extends Component {
                 </View>
                 <View style={{flex: 3, flexDirection: 'row', justifyContent: 'center' }}>
                   <ModalButton iconName='close' onPress={this.props.onCancel} />
-                  <ModalButton iconName='close' onPress={this.props.onConfirm} />
+                  <ModalButton iconName='check' onPress={this.props.onConfirm} />
                 </View>
               </View>
           </View>

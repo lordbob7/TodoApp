@@ -1,20 +1,13 @@
 import React, { Component } from 'react';
-import { AppRegistry, AppState, Platform, NativeModules, ScrollView, StyleSheet, Text, View, StatusBar, AsyncStorage } from 'react-native';
+import { AppRegistry, AppState, View, AsyncStorage } from 'react-native';
 import _ from 'lodash';
 import TodoList from './components/todolist.js';
 import Controls from './components/controls.js';
 import NewTodo from './components/newtodo.js';
-import * as colors from './styles/colors.js';
-import AppConfig from './appconfig.js';
+import { colors } from './styles/colors.js';
+import appConfig from './appconfig.js';
 
 const todosStorageKey = 'TODOS'
-const getStatusBarHeight = () => {
-  if (Platform.OS === 'android') {
-    statusBarHeight = StatusBar.currentHeight;
-  } else if (Platform.OS === 'ios') {
-    statusBarHeight = NativeModules.StatusBarManager.HEIGHT;
-  }
-}
 
 export default class TodoApp extends Component {
   constructor(props) {
@@ -64,7 +57,7 @@ export default class TodoApp extends Component {
   async loadStoredTodos() {
     let todos = []
     let storedItems = await AsyncStorage.getItem(todosStorageKey);
-    if (storedItems !== null && storedItems !== '') {
+    if (!storedItems) {
       console.log(`stored items: ${storedItems}`);
       todos = JSON.parse(storedItems);
     }
@@ -90,8 +83,8 @@ export default class TodoApp extends Component {
 
   onClearTodos() {
     if (this.state.selectionActive) {
-      let todos = _.filter(this.state.todos, {'selected': false});
-      this.setState({todos: todos, selectionActive: false});
+      let remainingTodos = _.filter(this.state.todos, {'selected': false});
+      this.setState({todos: remainingTodos, selectionActive: false});
     } else {
       this.setState({todos: [], selectionActive: false});
     }
@@ -108,10 +101,9 @@ export default class TodoApp extends Component {
 
   onPressTodo(todo) {
     console.log(`onPressTodo`);
-
     let todos = []
 
-    if (AppConfig.checkIsEnabled === true) {
+    if (appConfig.checkIsEnabled === true) {
       todos = this.state.todos.map(t => {
         if (t.text === todo.text) {
           let mutatedTodo = this.state.selectionActive ? {...t, ...{selected: !t.selected}} : {...t, ...{done: !t.done}}
@@ -121,7 +113,7 @@ export default class TodoApp extends Component {
         }
       });
     } else {
-      todos = this.state.todos;
+      return;
     }
 
     this.setState({todos: todos, selectionActive: _.some(todos, 'selected')});
@@ -165,7 +157,7 @@ export default class TodoApp extends Component {
             onConfirm={this.onConfirmAddTodo}
             onCancel={this.onCloseAddTodo} />
           <View style={{flex: 8, backgroundColor: colors.bgColor}}>
-            <TodoList onPress={this.onPressTodo} onLongPress={this.onLongPressTodo} todos={this.state.todos} checkIsEnabled={AppConfig.checkIsEnabled} />
+            <TodoList onPress={this.onPressTodo} onLongPress={this.onLongPressTodo} todos={this.state.todos} checkIsEnabled={appConfig.checkIsEnabled} />
           </View>
           <View style={{
                         flex: 1,
