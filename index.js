@@ -1,3 +1,4 @@
 import { AppRegistry } from 'react-native';
-import App from './App';
-AppRegistry.registerComponent('HelloReactNative', () => App);
+import TodoApp from './App';
+
+AppRegistry.registerComponent('TodoApp', () => TodoApp);

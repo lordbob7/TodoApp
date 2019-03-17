@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { AppRegistry, AppState, Platform, NativeModules, ScrollView, StyleSheet, Text, View, StatusBar, AsyncStorage } from 'react-native';
 import _ from 'lodash';
-import Todos from './components/todos.js';
+import TodoList from './components/todolist.js';
 import Controls from './components/controls.js';
 import NewTodo from './components/newtodo.js';
 import * as colors from './styles/colors.js';
@@ -16,7 +16,7 @@ const getStatusBarHeight = () => {
   }
 }
 
-export default class App extends Component {
+export default class TodoApp extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -165,7 +165,7 @@ export default class App extends Component {
             onConfirm={this.onConfirmAddTodo}
             onCancel={this.onCloseAddTodo} />
           <View style={{flex: 8, backgroundColor: colors.bgColor}}>
-            <Todos onPress={this.onPressTodo} onLongPress={this.onLongPressTodo} todos={this.state.todos} checkIsEnabled={AppConfig.checkIsEnabled} />
+            <TodoList onPress={this.onPressTodo} onLongPress={this.onLongPressTodo} todos={this.state.todos} checkIsEnabled={AppConfig.checkIsEnabled} />
           </View>
           <View style={{
                         flex: 1,
@@ -178,4 +178,4 @@ export default class App extends Component {
     }
 }
 
-AppRegistry.registerComponent('Todos', () => App);
+AppRegistry.registerComponent('TodoApp', () => TodoApp);
